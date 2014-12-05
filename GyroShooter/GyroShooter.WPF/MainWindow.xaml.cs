@@ -130,6 +130,44 @@ namespace GyroShooter.WPF
             }
         }
 
+        #region GameEngine
+
+        private void Explosion(double x, double y)
+        {
+            
+        }
+
+        private void CheckCollision(Image bullet)
+        {
+            Image deleteAsteroid = null;
+            //Image deleteBullet = null;
+
+            foreach (var asteroid in asteroidList)
+            {
+                if (Canvas.GetTop(bullet) >= (Canvas.GetTop(asteroid) - 10)
+                    && Canvas.GetTop(bullet) <= (Canvas.GetTop(asteroid) + 10) 
+                    && Canvas.GetLeft(bullet) >= Canvas.GetLeft(asteroid) 
+                    && Canvas.GetLeft(bullet) <= (Canvas.GetLeft(asteroid) + 50))
+                {
+                    deleteAsteroid = asteroid;
+                    //deleteBullet = bullet;
+
+                    destroyedAsteroids++;
+                    this.scoreCounter.Text = destroyedAsteroids.ToString() + " / " + goal.ToString();
+                }
+            }
+
+            if (deleteAsteroid != null)// && deleteBullet != null)
+            {
+                Explosion(Canvas.GetLeft(deleteAsteroid), Canvas.GetTop(deleteAsteroid));
+
+                asteroidList.Remove(deleteAsteroid);
+                //bulletList.Remove(deleteBullet);
+                this.gameCanvas.Children.Remove(deleteAsteroid);
+                //this.gameCanvas.Children.Remove(deleteBullet);   
+            }
+        }
+
         private void StartGame()
         {
             this.gameRunning = true;
@@ -167,7 +205,7 @@ namespace GyroShooter.WPF
 
             this.gameCanvas.Children.Add(newAsteroid);
             asteroidList.Add(newAsteroid);
-            
+
             DoubleAnimation doubleAnimation = new DoubleAnimation();
             doubleAnimation.From = 0;
             doubleAnimation.To = 360;
@@ -191,45 +229,11 @@ namespace GyroShooter.WPF
             bullet.Height = 41;
 
             Canvas.SetLeft(bullet, Canvas.GetLeft(this.ship) + this.ship.ActualWidth / 2 - 15 / 2);
-            Canvas.SetTop(bullet, Canvas.GetTop(this.ship) + this.ship.ActualHeight / 2 - 41 / 2);//!?this.ActualHeight
+            Canvas.SetTop(bullet, Canvas.GetTop(this.ship) + this.ship.ActualHeight / 2 - 41 / 2);
             //Canvas.SetZIndex(newAsteroid, 0);
 
             this.gameCanvas.Children.Add(bullet);
             bulletList.Add(bullet);
-        }
-
-        private void Explosion(int x, int y)
-        {
-            
-        }
-
-        private void CheckCollision(Image bullet)
-        {
-            Image deleteAsteroid = null;
-            //Image deleteBullet = null;
-
-            foreach (var asteroid in asteroidList)
-            {
-                if (Canvas.GetTop(bullet) >= (Canvas.GetTop(asteroid) - 10)
-                    && Canvas.GetTop(bullet) <= (Canvas.GetTop(asteroid) + 10) 
-                    && Canvas.GetLeft(bullet) >= Canvas.GetLeft(asteroid) 
-                    && Canvas.GetLeft(bullet) <= (Canvas.GetLeft(asteroid) + 50))
-                {
-                    deleteAsteroid = asteroid;
-                    //deleteBullet = bullet;
-
-                    destroyedAsteroids++;
-                    this.scoreCounter.Text = destroyedAsteroids.ToString() + " / " + goal.ToString();
-                }
-            }
-
-            if (deleteAsteroid != null)// && deleteBullet != null)
-            {
-                asteroidList.Remove(deleteAsteroid);
-                //bulletList.Remove(deleteBullet);
-                this.gameCanvas.Children.Remove(deleteAsteroid);
-                //this.gameCanvas.Children.Remove(deleteBullet);   
-            }
         }
 
         private void DrawLifes()
@@ -258,5 +262,7 @@ namespace GyroShooter.WPF
                     break;
             }
         }
+
+        #endregion
     }
 }
