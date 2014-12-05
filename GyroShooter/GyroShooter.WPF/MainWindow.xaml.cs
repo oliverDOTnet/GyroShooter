@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GyroShooter.WPF
 {
@@ -20,9 +21,28 @@ namespace GyroShooter.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int tick = 0;
+        private bool gameRunning = false;
+        private int destroyedAsteroids = 0;
+        private int lifes;
+        private int goal;
+
+        private DispatcherTimer timer;
+        private Random random;
+        private List<Image> asteroidList;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            asteroidList = new List<Image>();
+            random = new Random();
+            timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1) };
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
+        {
+
         }
     }
 }
