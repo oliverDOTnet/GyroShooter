@@ -10,11 +10,11 @@
         </Grid.RowDefinitions>
         <Image Grid.RowSpan="2" Source="Assets/space-bg.jpg" Stretch="UniformToFill" />
 
-        <Grid Grid.Row="0" Height="50">
+        <Grid Grid.Row="0" Height="100">
             <Grid>
                 <TextBlock Text="GyroShooter - #NHKA" VerticalAlignment="Center" FontSize="20" Margin="10,0" Foreground="#FF009CFF" />
             </Grid>
-            <Grid Width="200" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <TextBlock x:Name="life1" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,10,0" Foreground="#FF009CFF" />
                     <TextBlock x:Name="life2" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,10,0" Foreground="#FF009CFF" />
@@ -23,13 +23,17 @@
                     <TextBlock x:Name="life5" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,10,0" Foreground="#FF009CFF" />
                     <TextBlock x:Name="life6" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,0,0" Foreground="#FF009CFF" />
                 </StackPanel>
-            </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Score: " FontSize="20" Foreground="#FF009CFF"></TextBlock>
+                    <TextBlock x:Name="scoreCounter" Text="0" FontSize="20" Foreground="#FF009CFF"></TextBlock>
+                </StackPanel>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">
-            <Canvas x:Name="GameCanvas">
+            <Canvas x:Name="gameCanvas">
                 <Canvas.Children>
-                    <Image x:Name="ship" Source="Assets/ship.png" />
+                    <Image x:Name="ship" Width="25" Height="50" Source="Assets/ship.png" />
                 </Canvas.Children>
             </Canvas>
         </Grid>
