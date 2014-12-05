@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GyroShooterClient", "GyroShooterClient\GyroShooterClient.csproj", "{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GyroNet", "TestNet\GyroNet.csproj", "{68674E4A-6256-428D-931A-DBCD6368B9E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GyroShooterNetTest", "GyroShooterNetTest\GyroShooterNetTest.csproj", "{004E75B7-167C-42BB-B96E-DEA933259EB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|ARM.Build.0 = Debug|ARM
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|ARM.Deploy.0 = Debug|ARM
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|x86.ActiveCfg = Debug|x86
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|x86.Build.0 = Debug|x86
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Debug|x86.Deploy.0 = Debug|x86
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|ARM.ActiveCfg = Release|ARM
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|ARM.Build.0 = Release|ARM
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|ARM.Deploy.0 = Release|ARM
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|x86.ActiveCfg = Release|x86
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|x86.Build.0 = Release|x86
+		{E446E1AE-8986-46D5-92BF-ADC6E824D9D6}.Release|x86.Deploy.0 = Release|x86
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|x86.ActiveCfg = Release|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{004E75B7-167C-42BB-B96E-DEA933259EB8}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
