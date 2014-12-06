@@ -109,10 +109,10 @@ namespace GyroShooter.WPF
                             }
                             break;
                         case "shoot_left":
-                            Shoot();
+                            Shoot(-20);
                             break;
                         case "shoot_right":
-                            Shoot();
+                            Shoot(+20);
                             break;
                     }
                 }
@@ -133,7 +133,7 @@ namespace GyroShooter.WPF
         {
             if (gameRunning)
             {
-                Shoot();
+                Shoot(0);
             }
         }
 
@@ -279,7 +279,7 @@ namespace GyroShooter.WPF
             rotate.BeginAnimation(RotateTransform.AngleProperty, doubleAnimation);
         }
 
-        private void Shoot()
+        private void Shoot(float offset)
         {
             Image bullet = new Image();
 
@@ -287,8 +287,8 @@ namespace GyroShooter.WPF
             bullet.Width = 15;
             bullet.Height = 41;
 
-            Canvas.SetLeft(bullet, Canvas.GetLeft(this.ship) + this.ship.ActualWidth / 2 - 15 / 2);
-            Canvas.SetTop(bullet, Canvas.GetTop(this.ship) + this.ship.ActualHeight / 2 - 41 / 2);
+            Canvas.SetLeft(bullet, Canvas.GetLeft(this.ship) + this.ship.ActualWidth / 2 + bullet.ActualWidth / 2 + offset);
+            Canvas.SetTop(bullet, Canvas.GetTop(this.ship) + this.ship.ActualHeight / 2);
             //Canvas.SetZIndex(newAsteroid, 0);
 
             this.gameCanvas.Children.Add(bullet);
