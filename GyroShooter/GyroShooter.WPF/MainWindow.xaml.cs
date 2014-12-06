@@ -100,7 +100,7 @@ namespace GyroShooter.WPF
                         case "shoot_left":
                             Shoot();
                             break;
-                        case "shot_right":
+                        case "shoot_right":
                             Shoot();
                             break;
                     }
