@@ -5,16 +5,34 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GyroShooter.WPF", "GyroShooter.WPF\GyroShooter.WPF.csproj", "{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GyroNet", "..\GyroShooterClient\TestNet\GyroNet.csproj", "{68674E4A-6256-428D-931A-DBCD6368B9E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Release|ARM.ActiveCfg = Release|Any CPU
+		{909BBF64-AAD3-4228-8A3E-C3327D4BFD80}.Release|x86.ActiveCfg = Release|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{68674E4A-6256-428D-931A-DBCD6368B9E9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

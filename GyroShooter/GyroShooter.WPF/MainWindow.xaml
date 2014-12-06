@@ -51,7 +51,7 @@
         <Grid Grid.Row="1">
             <Canvas x:Name="gameCanvas">
                 <Canvas.Children>
-                    <Image x:Name="ship" Width="25" Height="50" Source="Assets/ship.png" />
+                    <Image x:Name="ship" Width="50" Height="50" Source="Assets/ship.png" />
                 </Canvas.Children>
             </Canvas>
         </Grid>

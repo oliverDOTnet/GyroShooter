@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using GyroShooterClient;
 
 namespace GyroShooter.WPF
 {
@@ -41,6 +43,8 @@ namespace GyroShooter.WPF
         private List<Image> asteroidList;
         private List<Image> bulletList;
 
+        private GyroClient gyroClient;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,11 +57,55 @@ namespace GyroShooter.WPF
             random = new Random();
             timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1) };
 
+            GyroClient.Listen();
+            GyroClient.ClientConnected += GyroClient_ClientConnected;
+
             timer.Tick += timer_Tick;
             this.MouseMove += OnMouseMove;
             this.MouseDown += OnMouseDown;
 
+            //StartGame();
+        }
+
+        private async void GyroClient_ClientConnected(object sender, GyroClient e)
+        {
+            gyroClient = e;
+            Debug.WriteLine("GyroClient successfully connected...");
+
             StartGame();
+
+            this.Dispatcher.Invoke(async () =>
+            {
+                while (true)
+                {
+                    var res = await gyroClient.GetCommand();
+                    Debug.WriteLine(res);
+
+                    switch (res.Command)
+                    {
+                        case "x":
+                            double px = Canvas.GetLeft(this.ship) - res.Value*25;
+                            if(px >= 0 && px <= (this.ActualWidth - this.ship.ActualWidth))
+                            {
+                                Canvas.SetLeft(this.ship, px);
+                            }
+                            break;
+                        case "y":
+                            double py = Canvas.GetTop(this.ship) - res.Value*25;
+                            if(py >= 0 && py <= (this.ActualHeight - this.ship.ActualHeight - 100))
+                            {
+                                Canvas.SetTop(this.ship, Canvas.GetTop(this.ship) - res.Value*25);
+                            }
+                            break;
+                        case "shoot_left":
+                            Shoot();
+                            break;
+                        case "shot_right":
+                            Shoot();
+                            break;
+                    }
+                }
+            });
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
@@ -66,8 +114,8 @@ namespace GyroShooter.WPF
             //double pX = position.X;
             //double pY = position.Y;
 
-            Canvas.SetLeft(this.ship, e.GetPosition(this.gameCanvas).X - this.ship.ActualWidth / 2);
-            Canvas.SetTop(this.ship, e.GetPosition(this.gameCanvas).Y - this.ship.ActualHeight / 2);
+            //Canvas.SetLeft(this.ship, e.GetPosition(this.gameCanvas).X - this.ship.ActualWidth / 2);
+            //Canvas.SetTop(this.ship, e.GetPosition(this.gameCanvas).Y - this.ship.ActualHeight / 2);
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -172,6 +220,12 @@ namespace GyroShooter.WPF
         {
             this.gameRunning = true;
             this.timer.Start();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                Canvas.SetLeft(this.ship, this.ActualWidth / 2 - this.ship.ActualWidth / 2);
+                Canvas.SetTop(this.ship, this.ActualHeight - this.ActualHeight * 0.8);
+            });
         }
 
         private void StopGame(StopMode mode)
