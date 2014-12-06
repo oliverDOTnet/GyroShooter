@@ -30,6 +30,11 @@ namespace GyroShooterClient
         public App()
         {
             this.InitializeComponent();
+
+            Resources.Remove("PhoneAccentColor");
+            Resources.Add("PhoneAccentColor", Windows.UI.Colors.Green);
+            ((SolidColorBrush)Resources["PhoneAccentBrush"]).Color = Windows.UI.Colors.Green;
+
             this.Suspending += this.OnSuspending;
         }
 

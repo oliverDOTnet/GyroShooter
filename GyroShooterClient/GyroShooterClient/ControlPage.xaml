@@ -23,10 +23,13 @@
                 VerticalAlignment="Stretch"/>
         <Button Content="" 
                 Name="ButtonRight"
+                Foreground="LightGreen"
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 BorderThickness="0"
-                Click="ButtonRight_Click"
                 VerticalAlignment="Stretch"/>
+        <Image Source="Assets/Logo.png"
+               
+               Grid.ColumnSpan="2" Stretch="None"></Image>
     </Grid>
 </Page>
