@@ -84,5 +84,15 @@ namespace GyroShooterClient
                 }
             }
         }
+
+        private void ButtonLeft_Click(object sender, RoutedEventArgs e)
+        {
+            client.WriteCommand("shoot_left", 0);
+        }
+
+        private void ButtonRight_Click(object sender, RoutedEventArgs e)
+        {
+            client.WriteCommand("shoot_right", 0);
+        }
     }
 }

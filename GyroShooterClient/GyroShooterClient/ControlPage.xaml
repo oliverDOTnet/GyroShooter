@@ -10,6 +10,23 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Content="" 
+                Name="ButtonLeft"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                BorderThickness="0"
+                Click="ButtonLeft_Click"
+                VerticalAlignment="Stretch"/>
+        <Button Content="" 
+                Name="ButtonRight"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                BorderThickness="0"
+                Click="ButtonRight_Click"
+                VerticalAlignment="Stretch"/>
     </Grid>
 </Page>
