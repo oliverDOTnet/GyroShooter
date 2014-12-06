@@ -57,6 +57,8 @@ namespace GyroShooter.WPF
             random = new Random();
             timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1) };
 
+            this.Loaded += MainWindow_Loaded;
+
             GyroClient.Listen();
             GyroClient.ClientConnected += GyroClient_ClientConnected;
 
@@ -65,6 +67,15 @@ namespace GyroShooter.WPF
             this.MouseDown += OnMouseDown;
 
             //StartGame();
+        }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                Canvas.SetLeft(this.ship, this.ActualWidth / 2 - this.ship.ActualWidth / 2);
+                Canvas.SetTop(this.ship, this.ActualHeight / 2 - this.ship.ActualHeight / 2);
+            });
         }
 
         private async void GyroClient_ClientConnected(object sender, GyroClient e)
@@ -220,12 +231,6 @@ namespace GyroShooter.WPF
         {
             this.gameRunning = true;
             this.timer.Start();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                Canvas.SetLeft(this.ship, this.ActualWidth / 2 - this.ship.ActualWidth / 2);
-                Canvas.SetTop(this.ship, this.ActualHeight - this.ActualHeight * 0.8);
-            });
         }
 
         private void StopGame(StopMode mode)

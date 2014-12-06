@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Button Content="" 
                 Name="ButtonLeft"
-                Grid.Column="1"
+                Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 BorderThickness="0"
                 Click="ButtonLeft_Click"
