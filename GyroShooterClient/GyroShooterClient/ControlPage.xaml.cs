@@ -73,7 +73,7 @@ namespace GyroShooterClient
             vib = VibrationDevice.GetDefault();
             client = e.Parameter as GyroClient;
             accelerometer = Accelerometer.GetDefault();
-            accelerometer.ReportInterval = Math.Max(50, accelerometer.MinimumReportInterval);
+            accelerometer.ReportInterval = Math.Max(30, accelerometer.MinimumReportInterval);
             accelerometer.ReadingChanged += accelerometer_ReadingChanged;
 
             while (true)
