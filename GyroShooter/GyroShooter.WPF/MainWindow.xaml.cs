@@ -49,27 +49,22 @@ namespace GyroShooter.WPF
         {
             InitializeComponent();
 
-            lifes = 6;
-            goal = 30;
-
             asteroidList = new List<Image>();
             bulletList = new List<Image>();
             random = new Random();
             timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1) };
 
+            destroyedAsteroids = 0;
+
             this.Loaded += MainWindow_Loaded;
+
+            timer.Tick += timer_Tick;
 
             GyroClient.Listen();
             GyroClient.ClientConnected += GyroClient_ClientConnected;
-
-            timer.Tick += timer_Tick;
-            this.MouseMove += OnMouseMove;
-            this.MouseDown += OnMouseDown;
-
-            //StartGame();
         }
 
-        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.Dispatcher.Invoke(() =>
             {
@@ -95,24 +90,24 @@ namespace GyroShooter.WPF
                     switch (res.Command)
                     {
                         case "x":
-                            double px = Canvas.GetLeft(this.ship) - res.Value*25;
+                            double px = Canvas.GetLeft(this.ship) + res.Value*25;
                             if(px >= 0 && px <= (this.ActualWidth - this.ship.ActualWidth))
                             {
                                 Canvas.SetLeft(this.ship, px);
                             }
                             break;
                         case "y":
-                            double py = Canvas.GetTop(this.ship) - res.Value*25;
+                            double py = Canvas.GetTop(this.ship) + res.Value*25;
                             if(py >= 0 && py <= (this.ActualHeight - this.ship.ActualHeight - 100))
                             {
-                                Canvas.SetTop(this.ship, Canvas.GetTop(this.ship) - res.Value*25);
+                                Canvas.SetTop(this.ship, py);
                             }
                             break;
                         case "shoot_left":
                             Shoot(-20);
                             break;
                         case "shoot_right":
-                            Shoot(+20);
+                            Shoot(20);
                             break;
                     }
                 }
@@ -121,12 +116,8 @@ namespace GyroShooter.WPF
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            //System.Windows.Point position = e.GetPosition(this);
-            //double pX = position.X;
-            //double pY = position.Y;
-
-            //Canvas.SetLeft(this.ship, e.GetPosition(this.gameCanvas).X - this.ship.ActualWidth / 2);
-            //Canvas.SetTop(this.ship, e.GetPosition(this.gameCanvas).Y - this.ship.ActualHeight / 2);
+            Canvas.SetLeft(this.ship, e.GetPosition(this.gameCanvas).X - this.ship.ActualWidth / 2);
+            Canvas.SetTop(this.ship, e.GetPosition(this.gameCanvas).Y - this.ship.ActualHeight / 2);
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -154,9 +145,6 @@ namespace GyroShooter.WPF
 
                     if (Canvas.GetTop(asteroid) >= this.ActualHeight)
                     {
-                        lifes--;
-                        DrawLifes();
-
                         this.gameCanvas.Children.Remove(asteroid);
                     }
                 }
@@ -176,16 +164,7 @@ namespace GyroShooter.WPF
 
                 bulletList.RemoveAll(bullet => Canvas.GetTop(bullet) <= 0);
 
-
-                if (destroyedAsteroids == goal)
-                {
-                    StopGame(StopMode.Winner);
-                }
-
-                if (lifes <= 0)
-                {
-                    StopGame(StopMode.Looser);
-                }
+                CheckCollision();
             }
         }
 
@@ -196,47 +175,89 @@ namespace GyroShooter.WPF
             
         }
 
+        /// <summary>
+        /// Check collisions between the given bullet and the asteroids
+        /// </summary>
+        /// <param name="bullet">A bullet-object which should checked.</param>
         private void CheckCollision(Image bullet)
         {
             Image deleteAsteroid = null;
-            //Image deleteBullet = null;
 
             foreach (var asteroid in asteroidList)
             {
-                if (Canvas.GetTop(bullet) >= (Canvas.GetTop(asteroid) - 10)
-                    && Canvas.GetTop(bullet) <= (Canvas.GetTop(asteroid) + 10) 
-                    && Canvas.GetLeft(bullet) >= Canvas.GetLeft(asteroid) 
-                    && Canvas.GetLeft(bullet) <= (Canvas.GetLeft(asteroid) + 50))
+                Point p1 = new Point(Canvas.GetLeft(bullet) + bullet.ActualWidth / 2, Canvas.GetTop(bullet) + bullet.ActualHeight / 2);
+                Point p2 = new Point(Canvas.GetLeft(asteroid) + asteroid.ActualWidth / 2, Canvas.GetTop(asteroid) + asteroid.ActualHeight / 2);
+                double distanceToBullet = Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
+
+                if(distanceToBullet <= 50)
                 {
                     deleteAsteroid = asteroid;
-                    //deleteBullet = bullet;
+
+                    if (gyroClient != null) gyroClient.WriteCommand("hit", (float)0.5);
 
                     destroyedAsteroids++;
-                    this.scoreCounter.Text = destroyedAsteroids.ToString() + " / " + goal.ToString();
+                    this.scoreCounter.Text = destroyedAsteroids.ToString();// + " / " + goal.ToString();
                 }
             }
 
-            if (deleteAsteroid != null)// && deleteBullet != null)
+            if (deleteAsteroid != null)
             {
                 Explosion(Canvas.GetLeft(deleteAsteroid), Canvas.GetTop(deleteAsteroid));
 
                 asteroidList.Remove(deleteAsteroid);
-                //bulletList.Remove(deleteBullet);
                 this.gameCanvas.Children.Remove(deleteAsteroid);
-                //this.gameCanvas.Children.Remove(deleteBullet);   
             }
         }
 
-        private void StartGame()
+        /// <summary>
+        /// Check collisions between the ship and the asteroids
+        /// </summary>
+        private void CheckCollision()
         {
-            this.gameRunning = true;
-            this.timer.Start();
+            foreach (var asteroid in asteroidList)
+            {
+                Point p1 = new Point(Canvas.GetLeft(this.ship) + this.ship.ActualWidth / 2, Canvas.GetTop(this.ship) + this.ship.ActualHeight / 2);
+                Point p2 = new Point(Canvas.GetLeft(asteroid) + asteroid.ActualWidth / 2, Canvas.GetTop(asteroid) + asteroid.ActualHeight / 2);
+                double distanceToShip = Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
+
+                if (distanceToShip <= 50)
+                {
+                    StopGame(StopMode.Looser);
+                }
+            }
         }
 
+        /// <summary>
+        /// Start the game by starting the Timer for the gameloop.
+        /// </summary>
+        private void StartGame()
+        {
+            asteroidList.Clear();
+            bulletList.Clear();
+
+            this.Dispatcher.Invoke(() => 
+            {
+                this.gameCanvas.Children.Clear();
+                this.gameCanvas.Children.Add(this.ship);
+                this.startGameButton.IsEnabled = false;
+            });
+
+            gameRunning = true;
+            timer.Start();
+        }
+
+        /// <summary>
+        /// Stop the game with a given mode.
+        /// </summary>
+        /// <param name="mode">State of the stop - Pause, Winner, Looser, Exit</param>
         private void StopGame(StopMode mode)
         {
             this.gameRunning = false;
             this.timer.Stop();
+
+            this.gameCanvas.Children.Clear();
+
+            this.startGameButton.IsEnabled = true;
 
             switch (mode)
             {
@@ -245,12 +266,21 @@ namespace GyroShooter.WPF
                 case StopMode.Winner:
                     break;
                 case StopMode.Looser:
+                    if (gyroClient != null)
+                    {
+                        gyroClient.WriteCommand("hit", (float) 0.5);
+                        gyroClient.WriteCommand("hit", (float) 0.5);
+                        gyroClient.WriteCommand("hit", (float) 0.5);
+                    }
                     break;
                 case StopMode.Exit:
                     break;
             }
         }
 
+        /// <summary>
+        /// Throw a new asteroid on the canvas on a random position.
+        /// </summary>
         private void ThrowAsteroid()
         {
             Image newAsteroid = new Image();
@@ -279,15 +309,19 @@ namespace GyroShooter.WPF
             rotate.BeginAnimation(RotateTransform.AngleProperty, doubleAnimation);
         }
 
-        private void Shoot(float offset)
+        /// <summary>
+        /// Shoot a new bullet with a given offset.
+        /// </summary>
+        /// <param name="offset">The offset (in pixels) of the gun, from the middle of the ship.</param>
+        private void Shoot(float offset = 0)
         {
             Image bullet = new Image();
 
             bullet.Source = new BitmapImage(new Uri("Assets/missile.png", UriKind.Relative));
             bullet.Width = 15;
-            bullet.Height = 41;
+            bullet.Height = 15;
 
-            Canvas.SetLeft(bullet, Canvas.GetLeft(this.ship) + this.ship.ActualWidth / 2 + bullet.ActualWidth / 2 + offset);
+            Canvas.SetLeft(bullet, Canvas.GetLeft(this.ship) + this.ship.ActualWidth / 2 - bullet.Width / 2 + offset);
             Canvas.SetTop(bullet, Canvas.GetTop(this.ship) + this.ship.ActualHeight / 2);
             //Canvas.SetZIndex(newAsteroid, 0);
 
@@ -323,5 +357,15 @@ namespace GyroShooter.WPF
         }
 
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.MouseMove += OnMouseMove;
+            this.MouseDown += OnMouseDown;
+
+            GyroClient.ClientConnected -= GyroClient_ClientConnected;
+
+            StartGame();
+        }
     }
 }

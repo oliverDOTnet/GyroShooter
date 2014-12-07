@@ -29,11 +29,18 @@
         <!--<Image Grid.RowSpan="2" Source="Assets/space-bg.jpg" Stretch="UniformToFill" />-->
 
         <Grid Grid.Row="0" Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <Grid>
-                <TextBlock Text="GyroShooter - #NHKA" VerticalAlignment="Center" FontSize="20" Margin="10,0" Foreground="#FF009CFF" />
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="25,0">
+                    <Button x:Name="startGameButton" Width="80" VerticalAlignment="Center" FontSize="28" Click="Button_Click">Start</Button>
+                    <TextBlock Text="GyroShooter - #NHKA" VerticalAlignment="Center" FontSize="28" Margin="10,0" Foreground="#FF009CFF" />
+                </StackPanel>
             </Grid>
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="25,0">
+                <StackPanel Visibility="Collapsed" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <TextBlock x:Name="life1" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,10,0" Foreground="#FF009CFF" />
                     <TextBlock x:Name="life2" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,10,0" Foreground="#FF009CFF" />
                     <TextBlock x:Name="life3" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,10,0" Foreground="#FF009CFF" />
@@ -42,8 +49,8 @@
                     <TextBlock x:Name="life6" Text="&#xE1CF;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,0,0" Foreground="#FF009CFF" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Score: " FontSize="20" Foreground="#FF009CFF"></TextBlock>
-                    <TextBlock x:Name="scoreCounter" Text="0" FontSize="20" Foreground="#FF009CFF"></TextBlock>
+                    <TextBlock Text="Score: " FontSize="28" Foreground="#FF009CFF"></TextBlock>
+                    <TextBlock x:Name="scoreCounter" Text="0" FontSize="28" Foreground="#FF009CFF"></TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

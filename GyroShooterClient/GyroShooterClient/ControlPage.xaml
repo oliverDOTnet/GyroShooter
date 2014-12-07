@@ -27,6 +27,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 BorderThickness="0"
+                Click="ButtonRight_Click"
                 VerticalAlignment="Stretch"/>
         <Image Source="Assets/Logo.png"
                
