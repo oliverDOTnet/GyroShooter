@@ -14,6 +14,7 @@ namespace GyroShooterClient
         StreamSocket sock;
         DataReader reader;
         DataWriter writer;
+        static StreamSocketListener listener;
 
         public GyroClient()
         {
@@ -34,9 +35,10 @@ namespace GyroShooterClient
 
         public static async void Listen(int port = 28008)
         {
-            StreamSocketListener listener = new StreamSocketListener();
+            listener = new StreamSocketListener();
             listener.ConnectionReceived += listener_ConnectionReceived;
-            await listener.BindEndpointAsync(null, port.ToString());
+
+            await listener.BindServiceNameAsync(port.ToString());
         }
 
         public static event EventHandler<GyroClient> ClientConnected;
